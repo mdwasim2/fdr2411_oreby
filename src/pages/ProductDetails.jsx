@@ -48,13 +48,23 @@ const ProductDetails = () => {
 
   
 
-  let handleCart = (item) =>{
-    dispatch(addToCart({ ...item, qun: 1 }));
+  // let handleCart = (item) =>{
+  //   dispatch(addToCart({ ...item, qun: 1 }));
+  // }
+
+
+  // function handleAddtoCart(){
+  //   alert("add to card successfull")
+  // }
+
+
+  const handleAddtoCart =(item)=>{
+     dispatch(addToCart({...item}));
+
   }
-
-
-
   
+
+
 
   return (
     <Container>
@@ -113,7 +123,7 @@ const ProductDetails = () => {
                 Add to Wish List
               </button>
               <button
-                onClick={() => handleCart(singleProducts)}
+                onClick={() => handleAddtoCart(singleProducts)}
                 className="font-dm font-bold text-[14px] text-[#262626] border-1 border-[#262626] px-12 py-3 bg-white hover:bg-[#262626] hover:text-white"
               >
                 Add to Cart
