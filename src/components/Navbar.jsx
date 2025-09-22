@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FaBars, FaCartArrowDown, FaSearch, FaSortDown, FaUser } from "react-icons/fa";
 import { MdChevronRight } from "react-icons/md";
+import { useSelector } from "react-redux";
 import Container from "./Container";
 
 const Navbar = () => {
@@ -8,6 +9,10 @@ const Navbar = () => {
     let accRef = useRef()
     let [show, setShow] = useState(false)
     let [accshow, setAccShow] = useState(false)
+
+    let cartdata = useSelector((state) => state.product.cartItem);
+
+
    
 
     useEffect(()=>{
@@ -84,6 +89,7 @@ const Navbar = () => {
                 <FaSortDown />
               </div>
               <div className="">
+                {cartdata.length}
                 <FaCartArrowDown />
               </div>
             </div>
