@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaBars, FaCartArrowDown, FaSearch, FaSortDown, FaUser } from "react-icons/fa";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Container from "./Container";
 
 const Navbar = () => {
@@ -88,12 +89,12 @@ const Navbar = () => {
                 <FaUser />
                 <FaSortDown />
               </div>
-              <div className="">
+              <Link to="/cart">
                 {cartdata.length}
                 <FaCartArrowDown />
-              </div>
+              </Link>
             </div>
-            {accshow &&
+            {/* {accshow &&
             <div className="bg-[#fff] py-3 absolute left-0 top-[34px] w-full">
               <ul>
                 <li className="hover:bg-[#262626] hover:text-[#fff] py-2 text-center duration-300 ease-in-out">
@@ -104,7 +105,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-            }
+            } */}
           </div>
         </div>
       </Container>

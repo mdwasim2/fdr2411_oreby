@@ -12,7 +12,6 @@ export const productSlice = createSlice({
       let findindex = state.cartItem.findIndex(
         (item) => item.id == action.payload.id
       );
-
       if (findindex != -1) {
         state.cartItem[findindex].qun++;
 
@@ -23,9 +22,17 @@ export const productSlice = createSlice({
         state.cartItem = [...state.cartItem, action.payload];
       }
     },
+    removeCart:(state, action)=>{
+      let filtercart = state.cartItem.filter((item)=> item.id !=action.payload.id)
+
+      state.cartItem = filtercart; 
+
+      
+    }
+
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addToCart } = productSlice.actions;
+export const { addToCart , removeCart} = productSlice.actions;
 export default productSlice.reducer;

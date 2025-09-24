@@ -102,6 +102,7 @@ const Post = ({ allPage, filterCategory, active }) => {
                 <span className="font-dm font-bold text-[14px] text-white inline-block px-3 bg-[#262626] absolute top-3 left-3 ">
                   New
                 </span>
+                {console.log(item)}
                 <Link to={`/shop/${item.id}`}>
                   <img src={item.thumbnail} alt="" className="w-full " />
                 </Link>
