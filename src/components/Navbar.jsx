@@ -1,38 +1,74 @@
 import { useEffect, useRef, useState } from "react";
-import { FaBars, FaCartArrowDown, FaSearch, FaSortDown, FaUser } from "react-icons/fa";
+import {
+  FaBars,
+  FaCartArrowDown,
+  FaSearch,
+  FaSortDown,
+  FaUser,
+} from "react-icons/fa";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Container from "./Container";
 
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { ApiData } from "./ContextApi";
+
 const Navbar = () => {
-    let cateRef = useRef()
-    let accRef = useRef()
-    let [show, setShow] = useState(false)
-    let [accshow, setAccShow] = useState(false)
+  let cateRef = useRef();
+  let accRef = useRef();
+  let [show, setShow] = useState(false);
+  let [accshow, setAccShow] = useState(false);
+  let navigate = useNavigate()
 
-    let cartdata = useSelector((state) => state.product.cartItem);
+  let [filterProducts, setFilterProduct] = useState([]);
+  let [searchModel, setSearchModel] = useState(false);
+
+  console.log(filterProducts);
+
+  let cartdata = useSelector((state) => state.product.cartItem);
+
+  useEffect(() => {
+    document.addEventListener("click", (e) => {
+      if (cateRef.current.contains(e.target) == true) {
+        setShow(!show);
+      } else {
+        setShow(false);
+      }
+      if (accRef.current.contains(e.target) == true) {
+        setAccShow(!accshow);
+      } else {
+        setAccShow(false);
+      }
+    });
+  }, []);
+
+  // product data fetch
+
+  let { info, loading } = useContext(ApiData);
+
+  // console.log(info);
+
+  //  search functionality apply
+
+  let handleSearch = (e) => {
+    if (e.target.value) {
+      setSearchModel(true);
+      let productFilter = info.filter((item) =>
+        item.title.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setFilterProduct(productFilter);
+    }else{
+      setSearchModel(false)
+    }
+  };
 
 
-   
-
-    useEffect(()=>{
-      document.addEventListener("click", (e) => {
-        if (cateRef.current.contains(e.target) == true) {
-          setShow(!show);
-        } else {
-          setShow(false);
-        }
-        if (accRef.current.contains(e.target) == true) {
-          setAccShow(!accshow);
-        } else {
-          setAccShow(false);
-        }
-        
-      });
-
-    },[])
-
+  let handleMove=(id)=>{
+    navigate(`/shop/${id}`)
+    window.location.reload()
+  }
 
   return (
     <div className="bg-[#F5F5F3] py-3">
@@ -74,6 +110,7 @@ const Navbar = () => {
           <div className="w-4/7">
             <div className="relative">
               <input
+                onChange={handleSearch}
                 type="text"
                 placeholder="Search...."
                 className="py-3 w-full pl-4 rounded-full bg-[#fff] outline-0"
@@ -82,6 +119,22 @@ const Navbar = () => {
                 <FaSearch />
               </div>
             </div>
+            {/*  product show  */}
+            {searchModel && (
+              <div className="w-full h-[300px] scrollbar scrollbar-thumb-red-700 scrollbar-track-sky-300  scrollbar overflow-y-scroll border border-gray">
+                {filterProducts.map((item) => (
+                <button onClick={()=>handleMove(item.id)}>
+                  <div className="flex items-center">
+                    <img className="w-[100px] :" src={item.thumbnail} alt="" />
+                    <h2>{item.title}</h2>
+                    <h3>{item.price}</h3>
+                  </div>
+                </button>
+                ))}
+              </div>
+              
+            )}
+            {/*  product show  */}
           </div>
           <div className="w-1/7 relative">
             <div className="flex items-center justify-end gap-x-4">
@@ -111,5 +164,5 @@ const Navbar = () => {
       </Container>
     </div>
   );
-}
-export default Navbar
+};
+export default Navbar;

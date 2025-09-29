@@ -10,6 +10,7 @@ import { addToCart } from "../components/slice/productSlice";
 
 
 const ProductDetails = () => {
+window.scrollTo(0, 0);
   let productId = useParams();
   let dispatch = useDispatch()
   
